@@ -100,7 +100,7 @@ AgriPulse/
 2. Clone or download the project
 
 ```bash
-git clone https://github.com/your-username/AgriPulse.git
+git clone https://github.com/Hetshah1203/AgriPulse.git
 ```
 
 3. Move project folder to `htdocs`
