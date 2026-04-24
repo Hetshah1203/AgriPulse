@@ -1,0 +1,17 @@
+DROP DATABASE IF EXISTS agri_scm_v3;
+CREATE DATABASE agri_scm_v3;
+USE agri_scm_v3;
+CREATE TABLE farmers (farmer_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), phone VARCHAR(15), address TEXT, email VARCHAR(100));
+INSERT INTO farmers (name, phone, address, email) VALUES ('Ramesh Kumar','9876541020','Kalyanpur','r.kumar@example.com');
+CREATE TABLE crops (crop_id INT AUTO_INCREMENT PRIMARY KEY, crop_name VARCHAR(100), crop_type VARCHAR(50), description TEXT);
+INSERT INTO crops (crop_name,crop_type,description) VALUES ('Wheat','Cereal','High yield');
+CREATE TABLE warehouses (warehouse_id INT AUTO_INCREMENT PRIMARY KEY, location VARCHAR(200), capacity_kg INT);
+INSERT INTO warehouses (location,capacity_kg) VALUES ('Aurangabad',12000);
+CREATE TABLE farm (farm_id INT AUTO_INCREMENT PRIMARY KEY, farmer_id INT, location VARCHAR(200), area_acres FLOAT, FOREIGN KEY (farmer_id) REFERENCES farmers(farmer_id));
+INSERT INTO farm (farmer_id,location,area_acres) VALUES (1,'Kalyanpur',5.2);
+CREATE TABLE supplychainorders (order_id INT AUTO_INCREMENT PRIMARY KEY, farm_id INT, crop_id INT, quantity FLOAT, order_date DATE, status VARCHAR(50), price_per_kg DECIMAL(10,2), FOREIGN KEY (farm_id) REFERENCES farm(farm_id), FOREIGN KEY (crop_id) REFERENCES crops(crop_id));
+INSERT INTO supplychainorders (farm_id,crop_id,quantity,order_date,status,price_per_kg) VALUES (1,1,500,'2025-08-12','Pending',48.50);
+CREATE TABLE retailers (retailer_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), phone VARCHAR(15), address TEXT, email VARCHAR(100), source_type VARCHAR(50), warehouse_id INT, FOREIGN KEY (warehouse_id) REFERENCES warehouses(warehouse_id));
+INSERT INTO retailers (name,phone,address,email,source_type,warehouse_id) VALUES ('AgroMart','9123406701','Aurangabad Market','agromart@shop.com','Warehouse',1);
+CREATE TABLE sales (sale_id INT AUTO_INCREMENT PRIMARY KEY, order_id INT, retailer_id INT, quantity_kg FLOAT, sale_price DECIMAL(10,2), sale_date DATE, FOREIGN KEY (order_id) REFERENCES supplychainorders(order_id), FOREIGN KEY (retailer_id) REFERENCES retailers(retailer_id));
+INSERT INTO sales (order_id,retailer_id,quantity_kg,sale_price,sale_date) VALUES (1,1,400,11500.00,'2025-06-05');

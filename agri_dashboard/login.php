@@ -1,0 +1,8 @@
+<?php include 'db.php'; if(isset($_POST['login'])){ $u=$_POST['username']; $p=$_POST['password']; $r=$_POST['role']; $users=['admin'=>['pass'=>'admin123','role'=>'admin'],'viewer'=>['pass'=>'viewer123','role'=>'viewer']]; if(isset($users[$u])&&$users[$u]['pass']===$p&&$users[$u]['role']===$r){ $_SESSION['user']=$u; $_SESSION['role']=$r; header('Location: index.php'); exit; } else $err='Invalid credentials'; } ?>
+<!doctype html><html><head><meta charset='utf-8'><title>Login - Agri SCM v3</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body class="bg-light d-flex align-items-center" style="height:100vh">
+<div class="container"><div class="row justify-content-center"><div class="col-md-5"><div class="card shadow-sm"><div class="card-body">
+<h4 class="card-title text-success">🌾 Agri SCM — Sign In</h4><?php if(!empty($err)) echo "<div class='alert alert-danger'>$err</div>"; ?>
+<form method="post"><div class="mb-2"><input class="form-control" name="username" placeholder="Username" required></div><div class="mb-2"><input type="password" class="form-control" name="password" placeholder="Password" required></div>
+<div class="mb-2"><select class="form-select" name="role"><option value="admin">Admin</option><option value="viewer">Viewer</option></select></div><button class="btn btn-success w-100" name="login">Sign in</button></form>
+<div class="mt-3 text-muted small">Admin: admin/admin123 | Viewer: viewer/viewer123</div></div></div></div></div></div></body></html>
